@@ -1,19 +1,14 @@
 .card__like-button {
   width: 21px;
   height: 18px;
-  background: transparent url('../../../images/like-inactive.svg') no-repeat;
-  background-size: 21px 18px;
+  background-image: url("https://code.s3.yandex.net/web-code/dom/heart.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
   border: none;
+  background-color: transparent;
   cursor: pointer;
-  padding: 0;
-  margin: 0;
-  -webkit-transition: opacity 0.3s;
-  -moz-transition: opacity 0.3s;
-  -ms-transition: opacity 0.3s;
-  -o-transition: opacity 0.3s;
-  transition: opacity 0.3s;
 }
 
-.card__like-button:hover {
-  opacity: 0.6;
+.card__like-button_active {
+  background-image: url("https://code.s3.yandex.net/web-code/dom/heart-filled.svg");
 }
