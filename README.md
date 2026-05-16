@@ -1,5 +1,5 @@
-Стартовый набор для выполнения проектной работы Место
+Ссылка на проект (https://polinadem1.github.io/mesto-pages)
 
-Для запуска приложения необходимо использовать live-server
-![изображение live-server](image.png)
-Live-server является расширением VSCode
+npm run dev - запуск локального сервера разработки
+npm run build - сборка проекта в папку dist
+git add . && git commit -m "..." && git push - публикация изменений

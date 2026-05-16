@@ -35,3 +35,4 @@ const config = {
       method: isLiked ? "DELETE" : "PUT",
       headers: config.headers,
     }).then(getResponseData);
+
