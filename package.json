@@ -5,23 +5,24 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
-    "build": "vite build"
+    "dev": "vite --open",
+    "build": "vite build",
+    "deploy": "vite build --base=/mesto-pages/ && npx gh-pages -d dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yandex-praktikum/mesto-ad.git"
+    "url": "git+https://github.com/polinadem1/mesto-pages.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/yandex-praktikum/mesto-ad/issues"
+    "url": "https://github.com/polinadem1/mesto-pages/issues"
   },
-  
-  "homepage": "https://github.com/yandex-praktikum/mesto-ad#readme",
+  "homepage": "https://polinadem1.github.io/mesto-pages",
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "vite": "^8.0.11"
   }
 }

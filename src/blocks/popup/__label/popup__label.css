@@ -2,7 +2,7 @@
   display: block;
   padding: 0 0 0;
   margin-bottom: 10px;
-  min-height: 55px;
+  min-height: 0px;
 }
 
 .popup__label:last-of-type {

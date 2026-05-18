@@ -14,18 +14,11 @@ export const createCardElement = (cardData, { onPreviewPicture, onLikeClick, onD
   cardTitle.textContent = cardData.name;
   likeCounter.textContent = cardData.likes?.length || 0;
 
-console.log("createCardElement вызван для карточки:", cardData.name);
-console.log("onDeleteClick передан?", onDeleteClick);
-console.log("currentUserId:", currentUserId);
-console.log("owner._id:", cardData.owner?._id);
-console.log("Условие:", currentUserId === cardData.owner?._id);
-
-
   if (cardData.likes?.some((like) => like._id === currentUserId)) {
     likeButton.classList.add("card__like-button_active");
   }
 
-  likeButton.addEventListener("click", () => onLikeClick(cardData._id, likeButton, likeCounter));
+  likeButton.addEventListener("click", () => onLikeClick(cardData._id, cardElement));
   cardImage.addEventListener("click", () => onPreviewPicture(cardData));
 
   if (currentUserId === cardData.owner?._id) {
@@ -39,4 +32,15 @@ console.log("Условие:", currentUserId === cardData.owner?._id);
   }
 
   return cardElement;
+};
+
+export const updateCardLike = (cardElement, likesArray) => {
+  const likeButton = cardElement.querySelector(".card__like-button");
+  const likeCounter = cardElement.querySelector(".card__like-count");
+  likeButton.classList.toggle("card__like-button_active");
+  likeCounter.textContent = likesArray.length;
+};
+
+export const removeCardElement = (cardElement) => {
+  cardElement.remove();
 };

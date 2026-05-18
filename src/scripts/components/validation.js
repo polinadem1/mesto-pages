@@ -1,44 +1,17 @@
-// src/scripts/components/validation.js
-
-const getErrorMessage = (inputElement) => {
-  if (inputElement.validity.valueMissing) {
-    return "Вы пропустили это поле";
-  }
-  
-  if (inputElement.validity.patternMismatch) {
-    return inputElement.title || "Некорректный формат";
-  }
-  
-  if (inputElement.validity.tooShort) {
-    return `Минимум ${inputElement.minLength} символа`;
-  }
-  
-  if (inputElement.validity.tooLong) {
-    return `Максимум ${inputElement.maxLength} символов`;
-  }
-  
-  if (inputElement.type === "url" && inputElement.validity.typeMismatch) {
-    return "Введите корректный URL (например: https://example.com/image.jpg)";
-  }
-  
-  if (inputElement.type === "url" && inputElement.value && !inputElement.value.startsWith('http')) {
-    return "Ссылка должна начинаться с http:// или https://";
-  }
-  
-  return inputElement.validationMessage;
-};
-
 const showInputError = (formElement, inputElement, config) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   if (errorElement) {
+    const errorMessage = inputElement.validity.patternMismatch
+      ? inputElement.dataset.errorMessage
+      : inputElement.validationMessage;
     inputElement.classList.add(config.inputErrorClass);
-    errorElement.textContent = getErrorMessage(inputElement);
+    errorElement.textContent = errorMessage;
     errorElement.classList.add(config.errorClass);
   }
 };
 
 const hideInputError = (formElement, inputElement, config) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   if (errorElement) {
     inputElement.classList.remove(config.inputErrorClass);
     errorElement.textContent = "";
@@ -58,14 +31,37 @@ const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => !inputElement.validity.valid);
 };
 
+const disableSubmitButton = (buttonElement, config) => {
+  buttonElement.classList.add(config.inactiveButtonClass);
+  buttonElement.disabled = true;
+};
+
+const enableSubmitButton = (buttonElement, config) => {
+  buttonElement.classList.remove(config.inactiveButtonClass);
+  buttonElement.disabled = false;
+};
+
 const toggleButtonState = (inputList, buttonElement, config) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(config.inactiveButtonClass);
-    buttonElement.disabled = true;
+    disableSubmitButton(buttonElement, config);
   } else {
-    buttonElement.classList.remove(config.inactiveButtonClass);
-    buttonElement.disabled = false;
+    enableSubmitButton(buttonElement, config);
   }
+};
+
+const resetFormErrors = (formElement, config) => {
+  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, config);
+  });
+};
+
+export const clearValidation = (formElement, config) => {
+  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+  
+  resetFormErrors(formElement, config);
+  disableSubmitButton(buttonElement, config);
 };
 
 const setEventListeners = (formElement, config) => {
